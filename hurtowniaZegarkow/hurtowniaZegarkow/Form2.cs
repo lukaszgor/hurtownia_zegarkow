@@ -51,5 +51,12 @@ namespace hurtowniaZegarkow
             ListaModeli listamodeli = new ListaModeli();
             listamodeli.ShowDialog();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            ListaProducentow listaproducentow = new ListaProducentow();
+            listaproducentow.ShowDialog();
+        }
     }
 }

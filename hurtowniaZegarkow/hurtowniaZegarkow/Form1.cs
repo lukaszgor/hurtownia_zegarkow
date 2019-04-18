@@ -17,13 +17,10 @@ namespace hurtowniaZegarkow
         {
             InitializeComponent();
         }
-        
 
         private void button1_Click(object sender, EventArgs e)
         {
             MySqlConnection conn = new MySqlConnection(@"datasource=127.0.0.1;port=3306;username=root;password=;persistsecurityinfo=True;database=czas");
-
-
 
             //conn.Open();
             MySqlCommand cmd = new MySqlCommand("select * from admin where login='"+this.textBox1.Text+"'and pass='"+this.textBox2.Text+"' ; ", conn);
