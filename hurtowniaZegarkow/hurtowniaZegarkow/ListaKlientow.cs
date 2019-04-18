@@ -30,7 +30,7 @@ namespace hurtowniaZegarkow
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            listBox1.ClearSelected();
 
             string sellect = sellectmanager.selectClientsList;
 
