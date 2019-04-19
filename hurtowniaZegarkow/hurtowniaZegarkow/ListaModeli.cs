@@ -49,5 +49,37 @@ namespace hurtowniaZegarkow
 
 
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(sellectmanager.connection);
+
+
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(sellectmanager.insertModelList(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text), conn);
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+
+            }
+            catch (Exception ee)
+            {
+                Console.Write(ee);
+            }
+
+            void clearTextbox()
+            {
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+                textBox5.Clear();
+                
+            }
+            clearTextbox();
+        }
     }
 }
