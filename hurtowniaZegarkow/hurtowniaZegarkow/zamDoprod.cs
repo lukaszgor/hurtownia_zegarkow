@@ -59,7 +59,8 @@ namespace hurtowniaZegarkow
 
 
 
-        }                                                                        
+        }
+        
 
 
         public void ProducentBox()
@@ -131,6 +132,30 @@ namespace hurtowniaZegarkow
             private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
            
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            listBox1.ClearSelected();
+
+            string sellect = sellectmanager.selectZamdoProd;
+
+            string MyConString = sellectmanager.connection;
+            MySqlConnection connection = new MySqlConnection(MyConString);
+            MySqlCommand command = connection.CreateCommand();
+            MySqlDataReader Reader;
+
+            command.CommandText = sellect;
+            connection.Open();
+            Reader = command.ExecuteReader();
+            while (Reader.Read())
+            {
+                string thisrow = "";
+                for (int i = 0; i < Reader.FieldCount; i++)
+                    thisrow += Reader.GetValue(i).ToString() + ",        ";
+                listBox1.Items.Add(thisrow);
+            }
+            connection.Close();
         }
     }
 }
