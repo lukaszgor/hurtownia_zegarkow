@@ -16,9 +16,8 @@ namespace hurtowniaZegarkow
         public zamDoprod()
         {
             InitializeComponent();
-            //Dispaly();
-            Insertuj();
-
+            ProducentBox();
+            ModelBox();
         }
         SellectManager sellectmanager = new SellectManager();
         private void button1_Click(object sender, EventArgs e)
@@ -28,57 +27,42 @@ namespace hurtowniaZegarkow
             f2.ShowDialog();
         }
 
-
-        //public void Dispaly()
-        //{
-        //    try
-        //    {
-
-        //        MySqlConnection conn = new MySqlConnection(sellectmanager.connection);
-        //        MySqlCommand cmd = new MySqlCommand(sellectmanager.innerJoinZamdoProd, conn);
-
-        //        conn.Open();
-
-
-
-
-
-        //        MySqlDataReader reader = cmd.ExecuteReader();
-        //    while (reader.Read())
-        //    {
-        //            comboBox1.Items.Add(reader.GetString("marka"));
-
-        //            comboBox2.Items.Add(reader.GetString("model"));
-        //    }
-
-        //    conn.Close();
-
-
-
-
-
-        //}
-        //    catch (Exception ee)
-        //    {
-        //        Console.Write(ee);
-        //    }
-
-
-        //}
-
-
         private void button2_Click(object sender, EventArgs e)
         {
 
-            MessageBox.Show(comboBox1.Text + " " + comboBox1.SelectedValue);
+            MessageBox.Show("DOKONANO ZAMOWIENIA PRAWIDŁOWO " +" "+ comboBox1.Text+" id Producnta= "+ comboBox1.SelectedValue+" " +comboBox2.Text+" id Modelu= "+ comboBox2.SelectedValue+"    ilość:  "+textBox1.Text);
+
+
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(sellectmanager.connection);
+
+
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(sellectmanager.insertZamDoProd(comboBox1.SelectedValue.ToString(), comboBox1.SelectedValue.ToString(), textBox1.Text), conn);
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+
+            }
+            catch (Exception ee)
+            {
+                Console.Write(ee);
+            }
+
+            void clearTextbox()
+            {
+                textBox1.Clear();
+            }
+            clearTextbox();
+
+
+
         }                                                                        
 
 
-
-
-
-
-        public void Insertuj()
+        public void ProducentBox()
         {
             string connetionString = null;
             MySqlConnection connection;
@@ -87,8 +71,8 @@ namespace hurtowniaZegarkow
             DataSet ds = new DataSet();
             int i = 0;
             string sql = null;
-            connetionString = "datasource=127.0.0.1;port=3306;username=root;password=;persistsecurityinfo=True;database=czas";
-            sql = "select marka,idproducenta from producenci";
+            connetionString = sellectmanager.connection;
+            sql = sellectmanager.selectZamdoProdProducenci;
             connection = new MySqlConnection(connetionString);
             try
             {
@@ -108,15 +92,43 @@ namespace hurtowniaZegarkow
                 MessageBox.Show("Can not open connection ! ");
             }
 
+            }
 
 
-
-
-
+        public void ModelBox()
+        {
+            string connetionString = null;
+            MySqlConnection connection;
+            MySqlCommand command;
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            DataSet ds = new DataSet();
+            int i = 0;
+            string sql = null;
+            connetionString = sellectmanager.connection;
+            sql = sellectmanager.selectZamdoProdModele;
+            connection = new MySqlConnection(connetionString);
+            try
+            {
+                connection.Open();
+                command = new MySqlCommand(sql, connection);
+                adapter.SelectCommand = command;
+                adapter.Fill(ds);
+                adapter.Dispose();
+                command.Dispose();
+                connection.Close();
+                comboBox2.DataSource = ds.Tables[0];
+                comboBox2.ValueMember = "idmodelu";
+                comboBox2.DisplayMember = "model";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Can not open connection ! ");
+            }
 
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+
+            private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
            
         }
