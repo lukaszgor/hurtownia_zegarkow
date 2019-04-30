@@ -15,7 +15,9 @@ namespace hurtowniaZegarkow
         public string selectProducentList = "SELECT * FROM producenci";
         public string selectZamdoProdModele="select model,idmodelu from modele";
         public string selectZamdoProdProducenci = "select marka,idproducenta from producenci";
+        public string selectObsZamodKlienta = "select * from zam_od_klienta";
         public string selectZamdoProd = "SELECT producenci.marka,modele.model,zam_do_prod.idzamdoprod,zam_do_prod.idproducenta,zam_do_prod.idmodelu,zam_do_prod.ilosc FROM producenci INNER JOIN zam_do_prod on producenci.idproducenta=zam_do_prod.idproducenta INNER JOIN modele on zam_do_prod.idmodelu=modele.idmodelu";
+        public string selectZamKlienta = "SELECT * FROM `zam_od_klienta`";
         public string connection = "datasource=127.0.0.1;port=3306;username=root;password=;persistsecurityinfo=True;database=czas";
 
         //INSERTY
@@ -38,5 +40,10 @@ namespace hurtowniaZegarkow
         {
              return "INSERT INTO `zam_do_prod` (`idzamdoprod`, `idproducenta`, `idmodelu`, `ilosc`) VALUES (NULL, '"+producent+ "', '" + model + "', '" + ilosc + "');";
         }
+        public string updateObsZamKlie(string idzam,string status)
+        {
+            return "UPDATE `zam_od_klienta` SET `status` = '" + status + "'WHERE `zam_od_klienta`.`idzamodklienta` ='" + idzam + "'; ";
+        }
+ 
     }
 }
